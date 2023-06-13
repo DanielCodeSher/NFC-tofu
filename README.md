@@ -17,7 +17,7 @@
 
     <main>
         <div class="box">
-            <img src="img/start.png" alt="star">
+            <img src="start.png" alt="star">
 
             <h1>NFC POAP
                 <A> GENERATOR </A>
@@ -28,7 +28,7 @@
                 to deliver mint links though NFC technology.
             </p>
             <div class="drag-Area">
-                <img src="img/upload.png" alt="uploadicon" href="#">
+                <img src="upload.png" alt="uploadicon" href="#">
                 <header id="dragText">Drag your file with poap links here</header>
                 <h6> TXT file max 5MB </h6>
                 <input type="file" id="upload" style="display: none;">
