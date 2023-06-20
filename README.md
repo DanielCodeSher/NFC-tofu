@@ -12,7 +12,7 @@
 
 <body>
     <nav>
-        <img src="/logo.png" alt="Logo">
+        <img src="[/logo.png](https://github.com/DanielCodeSher/NFC-tofu.github.io./blob/d900ae4f39e28115ff381e3106880a6907f9844a/logo.png)" alt="Logo">
     </nav>
 
     <main>
