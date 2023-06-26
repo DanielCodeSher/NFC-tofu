@@ -12,7 +12,7 @@
 
 <body>
     <nav>
-        <img src="logo.png" alt="Logo">
+        <img src="img/logo.png" alt="Logo">
     </nav>
 
     <main>
