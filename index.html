@@ -36,8 +36,8 @@
                 <label class="upload-button" for="upload">SELECT FILE</label>
             </div>
             <div class="email">
-                <p>Enter your email to save your links</p>
-                <input type="email" name="email" id="email">
+                <p>Enter your phrase to save your links</p>
+                <input type="text" name="phrase" id="phrase">
                 <button class="getlink" id="btn"> GET LINK </button>
             </div>
         </div>
@@ -47,106 +47,84 @@
 
     </footer>
 </body>
-<script>const dropArea = document.querySelector(".drag-Area");
-dragText = dropArea.querySelector("header");
-button = dropArea.querySelector("button");
-input = dropArea.querySelector("input");
+<script>
+  const dropArea = document.querySelector(".drag-Area");
+  const dragText = dropArea.querySelector("header");
+  const button = document.getElementById("btn");
+  const input = dropArea.querySelector("input");
+  const phraseInput = document.getElementById("phrase");
 
+  let file;
+  let linksArray = [];
 
-let file;
-let emails = [];
-
-input.addEventListener("change", function () {
-  file = this.files[0];
-  showFile();
-});
-
-//user drag file over area//
-dropArea.addEventListener("dragover", (event) => {
-  event.preventDefault();
-  dropArea.classList.add("active");
-  dragText.textContent = "Release to Upload";
-});
-
-//user leave area without drop the file//
-dropArea.addEventListener("dragleave", () => {
-  dropArea.classList.remove("active");
-  dragText.textContent = "Drag your file with poap links here";
-});
-
-//user drop the file on area//
-dropArea.addEventListener("drop", (event) => {
-  event.preventDefault();
-  file = event.dataTransfer.files[0];
-  showFile();
-});
-
-async function showFile() {
-  let fileType = file.type;
-  let validExtensions = ["text/plain"];
-  if (validExtensions.includes(fileType)) {
-    let fileReader = new FileReader();
-    let textDecoder = new TextDecoder();
-    fileReader.onload = function () {
-      let buffer = fileReader.result;
-      let text = textDecoder.decode(buffer);
-      let lines = text.split('\n').map(line => line.trim());
-      uploadFile(lines);
-    }
-    fileReader.readAsArrayBuffer(file);
-  } else {
-    alert("Please select a txt file.");
-  }
-}
-
-
-async function uploadFile(url) {
-  const linksArray = url;
-  const linksMap = {
-    'e-mail':"email",
-    'links': linksArray
-  };
-  // starting the upload
-  // for localhost you can use: http://localhost:5000 after semicolon is port number. 
-  let response = await fetch('https://danieldecarvalho.pythonanywhere.com/gerenciador', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(linksMap)
+  input.addEventListener("change", function () {
+    file = this.files[0];
+    showFile();
   });
-    console.log(response);
 
-  // upload finished
-  if (response.status === 200 || response.status === 201) {
-    alert("Uploaded successfully");
-  } else {
-    alert("Failed to upload");
-  }
-}
+  //user drag file over area//
+  dropArea.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    dropArea.classList.add("active");
+    dragText.textContent = "Release to Upload";
+  });
 
+  //user leave area without drop the file//
+  dropArea.addEventListener("dragleave", () => {
+    dropArea.classList.remove("active");
+    dragText.textContent = "Drag your file with poap links here";
+  });
 
-        // example {id:1592304983049, title: 'Deadpool', year: 2015}
-        const addEmails = (ev)=>{
-          ev.preventDefault();  //to stop the form submitting
-          let email = {
-              id: Date.now(),
-              title: document.getElementById('email').value,
-              
-          }
-          emails.push(email);
-         // document.forms[0].reset(); // to clear the form for the next entries
-          //document.querySelector('email').reset();
+  //user drop the file on area//
+  dropArea.addEventListener("drop", (event) => {
+    event.preventDefault();
+    file = event.dataTransfer.files[0];
+    showFile();
+  });
 
-          //for display purposes only
-           console.warn('added' , {emails} );
-          let pre = document.querySelector('#msg pre');
-          pre.textContent = '\n' + JSON.stringify(emails, '\t', 2); 
-
-          //saving to localStorage
-          localStorage.setItem('Emails', JSON.stringify(emails) );
+  async function showFile() {
+    let fileType = file.type;
+    let validExtensions = ["text/plain"];
+    if (validExtensions.includes(fileType)) {
+      let fileReader = new FileReader();
+      fileReader.onload = function () {
+        let text = fileReader.result;
+        linksArray = text.split('\n').map(line => line.trim());
       }
-      document.addEventListener('DOMContentLoaded', ()=>{
-          document.getElementById('btn').addEventListener('click', addEmails);
-      });</script>
-</body>
+      fileReader.readAsText(file);
+    } else {
+      alert("Please select a txt file.");
+    }
+  }
 
+  async function uploadFile() {
+    const selectedPhrase = phraseInput.value.trim();
+    if (!selectedPhrase) {
+      alert("Please enter a phrase.");
+      return;
+    }
+
+    const linksMap = {
+      'frases': [selectedPhrase],
+      'links': linksArray
+    };
+
+    // starting the upload
+    // for localhost you can use: http://localhost:5000 after semicolon is port number. 
+    let response = await fetch('https://danieldecarvalho.pythonanywhere.com/gerenciador', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(linksMap)
+    });
+
+    // upload finished
+    if (response.status === 200 || response.status === 201) {
+      alert("Uploaded successfully");
+    } else {
+      alert("Failed to upload");
+    }
+  }
+
+  button.addEventListener('click', uploadFile);
+</script>
 </html>
