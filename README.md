@@ -24,7 +24,7 @@
             </h1>
             <p>
                 Is a service that t0fu.tech provide to the
-                POAP community as a way to generate random links
+                POAP for community as a way to generate random links
                 to deliver mint links though NFC technology.
             </p>
             <div class="drag-Area">
