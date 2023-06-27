@@ -3,7 +3,7 @@ dragText = dropArea.querySelector("header");
 button = dropArea.querySelector("button");
 input = dropArea.querySelector("input");
 
-
+let dados;
 let file;
 let emails = [];
 
