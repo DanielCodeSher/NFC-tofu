@@ -58,7 +58,7 @@ async function uploadFile(url) {
     'links': linksArray
   };
   // starting the upload
-  // for localhost you can use: http://localhost:5000 after semicolon is port number. 
+  // caminho 
   let response = await fetch('https://danieldecarvalho.pythonanywhere.com/gerenciador', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
