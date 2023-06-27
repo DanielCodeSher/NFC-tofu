@@ -109,6 +109,7 @@ async function uploadFile(url) {
   // starting the upload
   // for localhost you can use: http://localhost:5000 after semicolon is port number. 
   let response = await fetch('https://danieldecarvalho.pythonanywhere.com/gerenciador', {
+    cors:'no-cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(linksMap)
