@@ -13,6 +13,7 @@
 <body>
     <nav>
         <img src="img/logo.png" alt="Logo">
+        <a href="poap.html">POAP</a>
     </nav>
 
     <main>
@@ -36,7 +37,7 @@
                 <label class="upload-button" for="upload">SELECT FILE</label>
             </div>
             <div class="email">
-                <p>Enter your phrase to save your links</p>
+                <p>Enter your projeto to save your links</p>
                 <input type="text" name="phrase" id="phrase">
                 <button class="getlink" id="btn"> GET LINK </button>
             </div>
@@ -105,7 +106,7 @@
     }
 
     const linksMap = {
-      'frases': [selectedPhrase],
+      'projeto': [selectedPhrase],
       'links': linksArray
     };
 
@@ -116,12 +117,25 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(linksMap)
     });
+    
+    if (response.ok) {
+    const data = await response.json();
+    if (data === 1500) {
+        alert("olá o nome do projeto ja existe")
+    }
+  
+    if (data === 1400) {
+      alert("enviado com sucesso!")
+    }
+  }
+
+
 
     // upload finished
     if (response.status === 200 || response.status === 201) {
-      alert("Uploaded successfully");
+      console.log("passou");
     } else {
-      alert("Failed to upload");
+      console.log("erro");
     }
   }
 
